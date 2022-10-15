@@ -54,8 +54,18 @@ public class Reseau {
      * vous pouvez utiliser Integer.MAX_VALUE pour +infini
      */
     public Reseau(InstanceSegmentationGraphe ins) {
-        // A COMPLETER
+        this.g = new Graphe(ins.getN() + 2, ins.getGraphe());
+        this.s = ins.getN();
+        this.t = ins.getN() + 1;
 
+        ins.getB().forEach(cell -> {
+            this.g.set(cell, s, Integer.MAX_VALUE);
+            this.g.set(s, cell, Integer.MAX_VALUE);
+        });
+        ins.getF().forEach(cell -> {
+            this.g.set(cell, t, Integer.MAX_VALUE);
+            this.g.set(t, cell, Integer.MAX_VALUE);
+        });
     }
 
     // ------------------------------------------------------------------
