@@ -1,18 +1,15 @@
 
-
 import java.util.*;
 
 public class Reseau {
-    private Graphe g; //g.get(i,j) = capacité de l'arc i -> j (0 si pas d'arc, ou si arc de capacité 0)
+    private Graphe g; // g.get(i,j) = capacité de l'arc i -> j (0 si pas d'arc, ou si arc de capacité
+                      // 0)
     private int s;
     private int t;
 
-
-
-    //------------------------------------------------------------------
-    //------------------CONSTRUCTEURS ----------------------------------
-    //------------------------------- ----------------------------------
-
+    // ------------------------------------------------------------------
+    // ------------------CONSTRUCTEURS ----------------------------------
+    // ------------------------------- ----------------------------------
 
     public Reseau(int nbNoeud, int s, int t) {
         g = new Graphe(nbNoeud);
@@ -33,11 +30,12 @@ public class Reseau {
 
     }
 
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Reseau)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof Reseau))
+            return false;
         Reseau reseau = (Reseau) o;
         return getS() == reseau.getS() && getT() == reseau.getT() && g.equals(reseau.g);
     }
@@ -48,22 +46,21 @@ public class Reseau {
     }
 
     /**
-     * Créé un réseau en fonction d'une instance du problème de DebruitageGraphe inst comme spécifié dans le sujet.
-     * En particulier, si le graph de inst à n sommets il faudra créer un réseau avec n+2 sommets, et avec s=n et t=n+1.
-     * indication : pensez à utiliser le constructeur Graphe(int h, Graphe g), et vous pouvez utiliser Integer.MAX_VALUE pour +infini
+     * Créé un réseau en fonction d'une instance du problème de DebruitageGraphe
+     * inst comme spécifié dans le sujet.
+     * En particulier, si le graph de inst à n sommets il faudra créer un réseau
+     * avec n+2 sommets, et avec s=n et t=n+1.
+     * indication : pensez à utiliser le constructeur Graphe(int h, Graphe g), et
+     * vous pouvez utiliser Integer.MAX_VALUE pour +infini
      */
     public Reseau(InstanceSegmentationGraphe ins) {
-        //A COMPLETER 
-
- 
+        // A COMPLETER
 
     }
 
-
-    //------------------------------------------------------------------
-    //------------------ GETTERS, SETTERS, METHODES UTILES et TOSTRING--
-    //------------------------------- ----------------------------------
-
+    // ------------------------------------------------------------------
+    // ------------------ GETTERS, SETTERS, METHODES UTILES et TOSTRING--
+    // ------------------------------- ----------------------------------
 
     public int getN() {
         return g.getN();
@@ -89,10 +86,9 @@ public class Reseau {
         return g.getVoisinsSortant(i);
     }
 
-
     public ArrayList<Integer> getVoisinsResiduel(int i, Flot f) {
-        //retourne tous les sommets j tq
-        //soit i->j et arc pas saturé   soit j->i et flot > 0
+        // retourne tous les sommets j tq
+        // soit i->j et arc pas saturé soit j->i et flot > 0
         ArrayList<Integer> sortants = g.getVoisinsSortant(i);
         ArrayList<Integer> entrants = g.getVoisinsEntrants(i);
         ArrayList<Integer> res = new ArrayList<>();
@@ -104,7 +100,7 @@ public class Reseau {
 
         for (int j : entrants) {
             if (f.getVal(j, i) > 0) {
-                if (!res.contains(j)) {//inutile quand ya pas de digons
+                if (!res.contains(j)) {// inutile quand ya pas de digons
                     res.add(j);
                 }
             }
@@ -113,17 +109,14 @@ public class Reseau {
         return res;
     }
 
-
     public String toString() {
         String res = "s : " + s + " t : " + t + "\n" + g;
         return res;
     }
 
-
-    //------------------------------------------------------------------
-    //------------------ METHODES POUR MAX FLOT / MIN CUT---------------
-    //------------------------------- ----------------------------------
-
+    // ------------------------------------------------------------------
+    // ------------------ METHODES POUR MAX FLOT / MIN CUT---------------
+    // ------------------------------- ----------------------------------
 
     private ArrayList<Integer> remonteChemin(int[] pred) {
         ArrayList<Integer> res = new ArrayList<Integer>();
@@ -136,16 +129,15 @@ public class Reseau {
         return res;
     }
 
-
     /**
      * Cherche un s-t chemin P dans reseau resdiuel de (this,f)
-     * si un tel chemin n'existe pas alors retourne (C,null), avec C la composante connexe de s
+     * si un tel chemin n'existe pas alors retourne (C,null), avec C la composante
+     * connexe de s
      * sinon retourne (null,P)
      */
     public Couple<ArrayList<Integer>, ArrayList<Integer>> trouverCheminDansResiduel(Flot f) {
         ArrayList<Integer> avoir = new ArrayList<Integer>();
         ArrayList<Integer> vus = new ArrayList<Integer>();
-
 
         int[] pred = new int[g.getN()];
         for (int i = 0; i < pred.length; i++) {
@@ -155,8 +147,8 @@ public class Reseau {
         avoir.add(s);
         boolean trouve = false;
         while (!trouve && !avoir.isEmpty()) {
-            //avoir est disjoint de vus
-            //pour tout i dans vu U avoir, on a un chemin de s -> .. -> i dans prec
+            // avoir est disjoint de vus
+            // pour tout i dans vu U avoir, on a un chemin de s -> .. -> i dans prec
             int v = avoir.remove(0);
 
             vus.add(v);
@@ -166,7 +158,7 @@ public class Reseau {
                 ArrayList<Integer> vois = getVoisinsResiduel(v, f);
                 for (int u : vois) {
                     if (!vus.contains(u) && !avoir.contains(u)) {
-                        //u est un nouveau sommet
+                        // u est un nouveau sommet
                         avoir.add(0, u);
                         pred[u] = v;
                     }
@@ -175,32 +167,27 @@ public class Reseau {
         }
 
         if (!trouve) {
-            return new Couple<ArrayList<Integer>, ArrayList<Integer>>(vus,null);
+            return new Couple<ArrayList<Integer>, ArrayList<Integer>>(vus, null);
         } else {
-            return new Couple<ArrayList<Integer>, ArrayList<Integer>>(null,remonteChemin(pred));
+            return new Couple<ArrayList<Integer>, ArrayList<Integer>>(null, remonteChemin(pred));
         }
 
     }
 
-
-
-
-    //---------------------------- AUTRES METHODES --------------------------
-
-
-
-
+    // ---------------------------- AUTRES METHODES --------------------------
 
     /**
      *
      * this est un réseau quelconque (potentiellement avec digons)
+     * 
      * @return un flot maximum, et une coupe minimum
-     * <p>
-     * Applique les étapes de l'algorithme de Ford-Fulkerson vu en cours
-     * pensez à utiliser la méthode "trouverCheminDansResiduel(..)" et "modifieSelonChemin(..) (dans la classe FLot) qui vous sont fournies
+     *         <p>
+     *         Applique les étapes de l'algorithme de Ford-Fulkerson vu en cours
+     *         pensez à utiliser la méthode "trouverCheminDansResiduel(..)" et
+     *         "modifieSelonChemin(..) (dans la classe FLot) qui vous sont fournies
      */
     public Couple<Flot, ArrayList<Integer>> flotMaxCoupeMin() {
-        //à compléter
+        // à compléter
         return null;
     }
 
@@ -211,7 +198,6 @@ public class Reseau {
      */
     public ArrayList<Integer> coupeMin() {
 
-
         Reseau r = new Reseau(this);
         Couple<Flot, ArrayList<Integer>> res = r.flotMaxCoupeMin();
         ArrayList<Integer> minCut = res.getElement2();
@@ -219,10 +205,7 @@ public class Reseau {
 
     }
 
-
-
     public static void main(String[] args) {
-
 
         System.out.println("main Reseau");
 
