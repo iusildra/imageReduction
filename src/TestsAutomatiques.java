@@ -199,7 +199,8 @@ class TestsAutomatiques {
         data[1][0] = 200;
         data[0][1] = 50;
         data[1][1] = 0;
-        Img im = new Img(data);
+        // Img im = new Img(data);
+        new Img(data);
         int p1 = InstanceSegmentationGraphe.penalite(255, 200);
         int p2 = InstanceSegmentationGraphe.penalite(255, 50);
         int p3 = InstanceSegmentationGraphe.penalite(0, 50);

@@ -126,7 +126,6 @@ public class Graphe {
      * @return null si pas d'arc i->j, et le couple c encodant l'arc sinon
      */
     private Couple<Integer, Integer> isVoisinSortantAux(int i, int j) {
-        Couple<Integer, Integer> res;
         for (Couple<Integer, Integer> c : l.get(i)) {
             if (c.getElement1() == j) {
                 return c;
@@ -136,7 +135,6 @@ public class Graphe {
     }
 
     private Couple<Integer, Integer> isVoisinEntrantAux(int i, int j) {
-        Couple<Integer, Integer> res;
         for (Couple<Integer, Integer> c : pred.get(j)) {
             if (c.getElement1() == i) {
                 return c;

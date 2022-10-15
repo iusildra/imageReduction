@@ -20,8 +20,10 @@ public class Pixmap {
 
   Pixmap(String fileName, String magic) throws IOException {
     PixmapReader reader = new PixmapReader(fileName);
-    if (!reader.matchKey(magic))
+    if (!reader.matchKey(magic)) {
+      reader.close();
       throw new IOException(fileName + " : wrong magic number");
+    }
     reader.skipComment('#');
     width = reader.getInt();
     height = reader.getInt();

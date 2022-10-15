@@ -1,8 +1,6 @@
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 public class InstanceSegmentationGraphe {
     private Graphe g;
@@ -69,11 +67,9 @@ public class InstanceSegmentationGraphe {
         isegm.getF().forEach(x -> this.f.add(img.calculIndice(x.getElement1(), x.getElement2())));
         isegm.getB().forEach(x -> this.b.add(img.calculIndice(x.getElement1(), x.getElement2())));
 
-        // The last one has already been done
         for (int i = 0; i < size - 1; i++) {
             var cell = img.calculCoord(i);
 
-            // Last line
             if (cell.getElement1() < lines - 1) {
                 var greyDiff = penalite(getGrey(img, i), getGrey(img, i + cols));
                 this.g.set(i, i + cols, greyDiff);
