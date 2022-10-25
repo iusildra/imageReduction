@@ -28,8 +28,15 @@ public class Main {
 	}
 
 	public static ArrayList<Integer> testMinCut() {
-		// A COMPLETER
-		return null;
+		var network = new Reseau(5, 0, 4);
+		network.set(0, 1, 1);
+		network.set(0, 2, 10);
+		network.set(1, 2, 6);
+		network.set(2, 1, 2);
+		network.set(1, 3, 8);
+		network.set(2, 4, 2);
+		network.set(3, 4, 3);
+		return network.coupeMin();
 	}
 
 	public static void addPoints(ArrayList<Couple<Integer, Integer>> liste, int i, int j, int size) {

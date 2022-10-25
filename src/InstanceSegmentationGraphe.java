@@ -81,7 +81,6 @@ public class InstanceSegmentationGraphe {
                 this.g.set(i, i + 1, greyDiff);
                 this.g.set(i + 1, i, greyDiff);
             }
-
         }
     }
 
@@ -104,8 +103,10 @@ public class InstanceSegmentationGraphe {
      *
      */
     public ArrayList<Integer> calculOpt() {
-        // A COMPLETER
-        return null;
+        var network = new Reseau(this);
+        var minCut = network.coupeMin();
+        minCut.remove(0);
+        return minCut;
     }
 
     public String toString() {

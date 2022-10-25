@@ -196,9 +196,37 @@ public class Reseau {
      *         pensez à utiliser la méthode "trouverCheminDansResiduel(..)" et
      *         "modifieSelonChemin(..) (dans la classe FLot) qui vous sont fournies
      */
-    public Couple<Flot, ArrayList<Integer>> flotMaxCoupeMin() {
-        // à compléter
-        return null;
+    private Couple<Flot, ArrayList<Integer>> flotMaxCoupeMin() {
+        var flux = new Flot(this);
+        return flotMaxCoupeMinAux(flux);
+    }
+
+    private Couple<Flot, ArrayList<Integer>> flotMaxCoupeMinAux(Flot f) {
+        var path = trouverCheminDansResiduel(f);
+
+        if (path.getElement2() == null) // No more path available
+            return new Couple<>(f, path.getElement1());
+
+        var minFlux = getMinFlux(path.getElement2(), f);
+
+        f.modifieSelonChemin(path.getElement2(), minFlux);
+        return flotMaxCoupeMinAux(f);
+    }
+
+    private int getMinFlux(ArrayList<Integer> chemin, Flot f) {
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < chemin.size() - 1; i++) {
+            int val = g.get(chemin.get(i), chemin.get(i + 1));
+            if (val < min)
+                min = val;
+        }
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return min;
     }
 
     /**
