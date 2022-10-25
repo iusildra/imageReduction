@@ -9,6 +9,10 @@ public class Img {
     private int hauteur;
     private int largeur;
 
+    public int[][] getData() {
+        return data;
+    }
+
     /**
      *
      * @param nomFichier : adresse d'un fichier pgm, ex "fichier.pgm"

@@ -70,13 +70,13 @@ public class InstanceSegmentationGraphe {
         for (int i = 0; i < size - 1; i++) {
             var cell = img.calculCoord(i);
 
-            if (cell.getElement1() < lines - 1) {
+            if (cell.getElement2() < lines - 1) {
                 var greyDiff = penalite(getGrey(img, i), getGrey(img, i + cols));
                 this.g.set(i, i + cols, greyDiff);
                 this.g.set(i + cols, i, greyDiff);
             }
 
-            if (cell.getElement2() < cols - 1) {
+            if (cell.getElement1() < cols - 1) {
                 var greyDiff = penalite(getGrey(img, i), getGrey(img, i + 1));
                 this.g.set(i, i + 1, greyDiff);
                 this.g.set(i + 1, i, greyDiff);
