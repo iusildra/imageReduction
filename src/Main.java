@@ -1,6 +1,7 @@
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.io.IOException;
 
 public class Main {
@@ -50,34 +51,27 @@ public class Main {
 	public static void main(String args[]) throws FileNotFoundException, IllegalArgumentException, IOException {
 		System.out.println("début Main");
 
-		// test à dé-commenter tout à la fin du TP, non noté, juste pour tester avec une
-		// "vraie" image!
+		Img imageFich = new Img("./bin/images/baby_2k.pgm");
 
-		/*
-		 * Img imageFich = new Img("images/baby_2k.pgm");
-		 * 
-		 * 
-		 * ArrayList<Couple<Integer,Integer>> bbB = new ArrayList<>();
-		 * ArrayList<Couple<Integer,Integer>> bbF = new ArrayList<>();
-		 * int c = 3;
-		 * 
-		 * addPoints(bbB,0,0,c);
-		 * addPoints(bbB,7,5,c);
-		 * addPoints(bbB,3,25,c);
-		 * addPoints(bbB,imageFich.nbColonnes()/2,0,c);
-		 * addPoints(bbB,imageFich.nbColonnes()-5,11,c);
-		 * 
-		 * addPoints(bbF,imageFich.nbColonnes()/2,imageFich.nbColonnes()/2-3*c,c);
-		 * addPoints(bbF,imageFich.nbColonnes()/2,imageFich.nbColonnes()/2,c);
-		 * addPoints(bbF,imageFich.nbColonnes()/2-10,imageFich.nbColonnes()/2+3*c,c);
-		 * addPoints(bbF,imageFich.nbColonnes()/2+5,imageFich.nbColonnes()/2+3*c,c);
-		 * addPoints(bbF,imageFich.nbColonnes()/2+5,imageFich.nbColonnes()/2+7*c,c);
-		 * 
-		 * InstanceSegmentation isegFich = new InstanceSegmentation(imageFich,bbF,bbB);
-		 * Img resFich = isegFich.creerImageSegmentee();
-		 * resFich.creerImage("images/outputbaby_2k");
-		 */
+		ArrayList<Couple<Integer, Integer>> bbB = new ArrayList<>();
+		ArrayList<Couple<Integer, Integer>> bbF = new ArrayList<>();
+		int c = 3;
 
+		addPoints(bbB, 0, 0, c);
+		addPoints(bbB, 7, 5, c);
+		addPoints(bbB, 3, 25, c);
+		addPoints(bbB, imageFich.nbColonnes() / 2, 0, c);
+		addPoints(bbB, imageFich.nbColonnes() - 5, 11, c);
+
+		addPoints(bbF, imageFich.nbColonnes() / 2, imageFich.nbColonnes() / 2 - 3 * c, c);
+		addPoints(bbF, imageFich.nbColonnes() / 2, imageFich.nbColonnes() / 2, c);
+		addPoints(bbF, imageFich.nbColonnes() / 2 - 10, imageFich.nbColonnes() / 2 + 3 * c, c);
+		addPoints(bbF, imageFich.nbColonnes() / 2 + 5, imageFich.nbColonnes() / 2 + 3 * c, c);
+		addPoints(bbF, imageFich.nbColonnes() / 2 + 5, imageFich.nbColonnes() / 2 + 7 * c, c);
+
+		InstanceSegmentation isegFich = new InstanceSegmentation(imageFich, bbF, bbB);
+		Img resFich = isegFich.creerImageSegmentee();
+		resFich.creerImage("images/outputbaby_2k");
 	}
 
 }

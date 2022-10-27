@@ -40,7 +40,9 @@ public class InstanceSegmentation {
   }
 
   public Img creerImageSegmentee() {
+    System.out.println("begin resolve");
     ArrayList<Couple<Integer, Integer>> B = resoudre();
+    System.out.println("end resolve");
     return img.appliquerFiltre(B, f, b);
   }
 
