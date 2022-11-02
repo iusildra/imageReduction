@@ -104,7 +104,9 @@ public class InstanceSegmentationGraphe {
      */
     public ArrayList<Integer> calculOpt() {
         var network = new Reseau(this);
+        System.out.println("network created");
         var minCut = network.coupeMin();
+        System.out.println("minCut calculated");
         minCut.remove(0);
         return minCut;
     }

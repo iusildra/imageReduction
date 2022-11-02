@@ -119,9 +119,17 @@ public class Img {
      */
     public Img appliquerFiltre(ArrayList<Couple<Integer, Integer>> B, ArrayList<Couple<Integer, Integer>> f,
             ArrayList<Couple<Integer, Integer>> b) {
-        // A COMPLETER
-
-        return null;
+        Img res = new Img(this);
+        for (Couple<Integer, Integer> c : B) {
+            res.data[c.getElement1()][c.getElement2()] = 200;
+        }
+        for (Couple<Integer, Integer> c : b) {
+            res.data[c.getElement1()][c.getElement2()] = 255;
+        }
+        for (Couple<Integer, Integer> c : f) {
+            res.data[c.getElement1()][c.getElement2()] = 0;
+        }
+        return res;
     }
 
     /************************************************************/

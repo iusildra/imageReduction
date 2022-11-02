@@ -51,7 +51,7 @@ public class Main {
 	public static void main(String args[]) throws FileNotFoundException, IllegalArgumentException, IOException {
 		System.out.println("début Main");
 
-		Img imageFich = new Img("./bin/images/baby_2k.pgm");
+		Img imageFich = new Img("src/main/resources/images/baby_2k.pgm");
 
 		ArrayList<Couple<Integer, Integer>> bbB = new ArrayList<>();
 		ArrayList<Couple<Integer, Integer>> bbF = new ArrayList<>();
@@ -69,9 +69,11 @@ public class Main {
 		addPoints(bbF, imageFich.nbColonnes() / 2 + 5, imageFich.nbColonnes() / 2 + 3 * c, c);
 		addPoints(bbF, imageFich.nbColonnes() / 2 + 5, imageFich.nbColonnes() / 2 + 7 * c, c);
 
+		System.out.println(testMinCut());
+
 		InstanceSegmentation isegFich = new InstanceSegmentation(imageFich, bbF, bbB);
 		Img resFich = isegFich.creerImageSegmentee();
-		resFich.creerImage("images/outputbaby_2k");
+		resFich.creerImage("src/main/resources/images/outputbaby_2k.pgm");
 	}
 
 }

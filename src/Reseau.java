@@ -197,33 +197,22 @@ public class Reseau {
 	 *         pensez à utiliser la méthode "trouverCheminDansResiduel(..)" et
 	 *         "modifieSelonChemin(..) (dans la classe FLot) qui vous sont fournies
 	 */
+
 	private Couple<Flot, ArrayList<Integer>> flotMaxCoupeMin() {
 		var flux = new Flot(this);
 		Couple<ArrayList<Integer>, ArrayList<Integer>> path;
-		do {
-			path = trouverCheminDansResiduel(flux);
-			var minFlux = getMinFlux(path.getElement2(), flux);
-			System.out.println("Total flux : " + flux.getVal() + ", newFlux : " + minFlux);
-
+		path = trouverCheminDansResiduel(flux);
+		int minFlux = Integer.MAX_VALUE;
+		while(path.getElement2() != null) {
+			for(int i=0; i<path.getElement2().size()-1; i++) {
+				int v = path.getElement2().get(i);
+				int next = path.getElement2().get(i+1);
+				minFlux = Math.min(minFlux, g.get(v, next));
+			}
 			flux.modifieSelonChemin(path.getElement2(), minFlux);
-			counter += 1;
-		} while (path.getElement2() != null);
-		return new Couple<>(flux, path.getElement1());
-	}
-
-	private int getMinFlux(ArrayList<Integer> chemin, Flot flux) {
-		int min = Integer.MAX_VALUE;
-		for (int i = 0; i < chemin.size() - 1; i++) {
-			var first = chemin.get(i);
-			var second = chemin.get(i + 1);
-			var cap = this.g.get(first, second);
-			var currentFlux = flux.getVal(first, second);
-			var val = cap - currentFlux;
-			if (val < min)
-				min = val;
+			path = trouverCheminDansResiduel(flux);
 		}
-
-		return min;
+		return new Couple<>(flux, path.getElement1());
 	}
 
 	/**
@@ -234,10 +223,11 @@ public class Reseau {
 	public ArrayList<Integer> coupeMin() {
 
 		Reseau r = new Reseau(this);
+		System.out.println("reseau entré");
 		Couple<Flot, ArrayList<Integer>> res = r.flotMaxCoupeMin();
+		System.out.println("flotMaxCoupeMin calculé");
 		ArrayList<Integer> minCut = res.getElement2();
 		return minCut;
-
 	}
 
 	public static void main(String[] args) {
